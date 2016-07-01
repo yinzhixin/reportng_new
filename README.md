@@ -5,3 +5,5 @@
 
 显示效果：  
 ![](http://ww1.sinaimg.cn/mw690/78090649jw1f5efogko5cj21gx0l2mzs.jpg)
+
+jar包[下载](http://o9mrk1bm4.bkt.clouddn.com/reportng-1.1.5.jar)
