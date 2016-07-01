@@ -20,12 +20,21 @@ import org.testng.ITestResult;
 
 /**
  * Comparator for sorting TestNG test results alphabetically by method name.
+ * 
  * @author Daniel Dyer
  */
-class TestResultComparator implements Comparator<ITestResult>
-{
-    public int compare(ITestResult result1, ITestResult result2)
-    {
-        return result1.getName().compareTo(result2.getName());
-    }
+class TestResultComparator implements Comparator<ITestResult> {
+	public int compare(ITestResult result1, ITestResult result2) {
+		// 按照名称排序显示
+		// return result1.getName().compareTo(result2.getName());
+		
+		// 按照运行时间排序显示
+		int longresult2 = 0;
+		if (result1.getStartMillis() < result2.getStartMillis()) {
+			longresult2 = -1;
+		} else {
+			longresult2 = 1;
+		}
+		return longresult2;
+	}
 }
