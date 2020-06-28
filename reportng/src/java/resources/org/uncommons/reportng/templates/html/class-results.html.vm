@@ -46,10 +46,12 @@
     #if ($output.size() > 0)
     <div class="testOutput">
       #foreach( $line in $output )
-        #if ($meta.shouldEscapeOutput())
-          $utils.escapeHTMLString($utils.removeImage($line))<br />
-        #else
-          $utils.removeImage($line)<br />
+        #if (!$utils.isBlank($utils.removeImage($line)))
+            #if ($meta.shouldEscapeOutput())
+              $utils.escapeHTMLString($utils.removeImage($line))<br />
+            #else
+              $utils.removeImage($line)<br />
+            #end
         #end
       #end
     </div>
