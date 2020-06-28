@@ -218,8 +218,8 @@ public class HTMLReporter extends AbstractReporter
             if (index < 0)
             {
                 index = Math.abs(index + 1);
-            }
-            resultsForClass.add(index, result);
+        }
+        resultsForClass.add(index, result);
         }
         return sortedResults;
     }
@@ -296,6 +296,11 @@ public class HTMLReporter extends AbstractReporter
     {
         copyClasspathResource(outputDirectory, "reportng.css", "reportng.css");
         copyClasspathResource(outputDirectory, "reportng.js", "reportng.js");
+        // add by yinzhixin at 2020-05-25
+        copyClasspathResource(outputDirectory, "ichart.js", "ichart.js");
+        copyClasspathResource(outputDirectory, "jquery.min.js", "jquery.min.js");
+        copyClasspathResource(outputDirectory, "bootstrap.min.js", "bootstrap.min.js");
+        copyClasspathResource(outputDirectory, "bootstrap.min.css", "bootstrap.min.css");
         // If there is a custom stylesheet, copy that.
         File customStylesheet = META.getStylesheetPath();
 

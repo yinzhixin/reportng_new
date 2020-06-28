@@ -15,24 +15,13 @@
 //=============================================================================
 package org.uncommons.reportng;
 
+import org.testng.*;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import org.testng.IInvokedMethod;
-import org.testng.ISuite;
-import org.testng.ISuiteResult;
-import org.testng.ITestContext;
-import org.testng.ITestNGMethod;
-import org.testng.ITestResult;
-import org.testng.Reporter;
-import org.testng.SkipException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility class that provides various helper methods that can be invoked
@@ -439,9 +428,36 @@ public class ReportNGUtils
         throw new IllegalStateException("Could not find matching end time.");
     }
 
-
     public String formatPercentage(int numerator, int denominator)
     {
         return PERCENTAGE_FORMAT.format(numerator / (double) denominator);
+    }
+
+    public String getImageString(String s) {
+        String regex = "(<span.*?</span>)?(<img(.*?)/>)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.find()) {
+            String group = matcher.group();
+            return group;
+        } else {
+            return "";
+        }
+    }
+
+    public String removeImage(String s) {
+        return s.replaceAll("(<span.*?</span>)?(<img(.*?)/>)", "");
+    }
+
+    public boolean isBlank(String str){
+        int strLen;
+        if (str != null && (strLen = str.length()) != 0) {
+            for(int i = 0; i < strLen; ++i) {
+                if (!Character.isWhitespace(str.charAt(i))) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

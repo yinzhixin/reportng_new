@@ -11,12 +11,12 @@
       #set ($testInstanceName = " ($testResult.testName)")
     #end
     #if ($testResult.method.description && $testResult.method.description.length() > 0)
-      <span class="description" title="$testResult.method.description">$testResult.method.description</span>
+      <span class="description" title="$testResult.method.description">$testResult.name$testInstanceName</span>
     #else
       $testResult.name$testInstanceName
     #end
   </td>
-  <td class="duration text-center">
+  <td class="duration">
     $utils.formatDuration($testResult.startMillis, $testResult.endMillis)s
   </td>
   <td class="result">
@@ -79,52 +79,16 @@
   <td class="screenshot">
     #set ($output = $utils.getTestOutput($testResult))
     #if ($output.size() > 0)
-        #foreach( $line in $output )
-            #if (!$utils.isBlank($utils.getImageString($line)))
-                <a href="#" data-toggle="modal" data-target="#screenshot-$id"><b>View Detail</b></a>
-                #break
+        <div class="screenshotimage">
+            #foreach( $line in $output )
+                #if ($meta.shouldEscapeOutput())
+                    $utils.escapeHTMLString($utils.getImageString($line))<br />
+                #else
+                    $utils.getImageString($line)<br />
+                #end
             #end
-        #end
-    #else
-        <span><b>No Screenshot</b></span>
+        </div>
     #end
 </td>
 </tr>
-    #if ($output.size() > 0)
-        <div class="modal fade" id="screenshot-$id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="width:1000px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            Screenshot Detail
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                #foreach( $line in $output )
-                                    #if (!$utils.isBlank($utils.getImageString($line)))
-                                        <div class="col-md-3" style="margin-right:15px;margin-top:15px;">
-                                            #if ($meta.shouldEscapeOutput())
-                                                $utils.escapeHTMLString($utils.getImageString($line))
-                                            #else
-                                                $utils.getImageString($line)
-                                            #end
-                                        </div>
-                                    #end
-                                #end
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-    #end
 #end
