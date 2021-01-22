@@ -27,6 +27,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URI;
+import java.net.URL;
 import java.util.ResourceBundle;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -131,7 +133,7 @@ public abstract class AbstractReporter implements IReporter
     {
         String resourcePath = classpathPrefix + resourceName;
         InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
-        copyStream(outputDirectory, resourceStream, targetFileName);
+        copyStreamNew(outputDirectory, resourceStream, targetFileName);
     }
 
 
@@ -183,6 +185,47 @@ public abstract class AbstractReporter implements IReporter
                 writer.write(line);
                 writer.write('\n');
                 line = reader.readLine();
+            }
+            writer.flush();
+        }
+        finally
+        {
+            if (reader != null)
+            {
+                reader.close();
+            }
+            if (writer != null)
+            {
+                writer.close();
+            }
+        }
+    }
+
+    /**
+     * 老版本的copyStream方法通过字符流复制文件，对于二进制的图片文件不支持，改为通过字节流复制，更加通用
+     * @author yinzhixin 2020-12-02
+     * @param outputDirectory
+     * @param stream
+     * @param targetFileName
+     * @throws IOException
+     */
+    protected void copyStreamNew(File outputDirectory,
+                              InputStream stream,
+                              String targetFileName) throws IOException
+    {
+        File targetFile = new File(outputDirectory, targetFileName);
+        InputStream reader = stream;
+        FileOutputStream writer = null;
+        try
+        {
+            writer = new FileOutputStream(targetFile);
+
+            byte[] read = new byte[1024];
+            int len = 0;
+
+            while ((len = reader.read(read))!= -1)
+            {
+                writer.write(read,0,len);
             }
             writer.flush();
         }

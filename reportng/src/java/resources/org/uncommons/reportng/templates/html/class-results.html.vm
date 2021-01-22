@@ -29,11 +29,11 @@
       #end
       #if ($utils.hasDependentMethods($testResult))
         <i>$messages.getString("dependsOnMethods"): </i>
-        <span class="dependency">$utils.getDependentMethods($testResult)</span>
+        <span class="dependency">$utils.getDependentMethods($testResult)</span><br />
       #end
-      #if ($utils.hasSkipException($testResult))
+      #if ($utils.hasException($testResult))
       	<i>$messages.getString("skipped.reason"): </i>
-      	<span class="dependency">$utils.getSkipExceptionMessage($testResult)</span>
+      	<span class="dependency">$utils.getExceptionMessage($testResult)</span><br />
       #end
     #end
 
@@ -108,13 +108,21 @@
                         <div class="container">
                             <div class="row">
                                 #foreach( $line in $output )
+                                    #set($onclick = ' onclick="'+"showBannerModal($id,$velocityCount)"+'"')
                                     #if (!$utils.isBlank($utils.getImageString($line)))
                                         <div class="col-md-3" style="margin-right:15px;margin-top:15px;">
                                             #if ($meta.shouldEscapeOutput())
-                                                $utils.escapeHTMLString($utils.getImageString($line))
+                                                #set($imageStr = $utils.escapeHTMLString($utils.getPureImageString($line)))
+                                                #set($restStr = $utils.escapeHTMLString($utils.removeImageTag($line)))
                                             #else
-                                                $utils.getImageString($line)
+                                                #set($imageStr = $utils.getPureImageString($line))
+                                                #set($restStr = $utils.removeImageTag($line))
                                             #end
+                                            #set($imgTag = $imageStr.substring(0,4))
+                                            #set($restImgStr = $imageStr.substring(4))
+                                            #set($newImgStr = "$imgTag$onclick$restImgStr")
+                                            #set($newFullImgStr = "$restStr$newImgStr")
+                                            $newFullImgStr
                                         </div>
                                     #end
                                 #end
@@ -127,6 +135,44 @@
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
+        </div>
+        <div class="modal fade" id="bannerModal$id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="width: auto;">
+                <div class="modal-content banner-frame">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Screenshot Detail
+                        </h4>
+                    </div>
+                    <div id="banner$id" class="banners">
+                        <div class="click_left"><img class="get_height" onclick="banner_left_right('left')" src="banner_left.png"></div>
+                        <div class="click_right"><img onclick="banner_left_right('right')" src="banner_right.png"></div>
+                        <div class="number">
+                            <div id="numbers$id" class="numbers"></div>
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div id="banner_container$id" class="banner_img">
+                            #foreach( $line in $output )
+                                #set($imgClass = ' class="'+"banner_img${id}-$velocityCount"+'"')
+                                #if (!$utils.isBlank($utils.getPureImageString($line)))
+                                    #if ($meta.shouldEscapeOutput())
+                                        #set($imageStr = $utils.escapeHTMLString($utils.getPureImageString($line)))
+                                    #else
+                                        #set($imageStr = $utils.getPureImageString($line))
+                                    #end
+                                    #set($imgTag = $imageStr.substring(0,4))
+                                    #set($restImgStr = $imageStr.substring(4))
+                                    #set($newImgStr = "$imgTag$imgClass$restImgStr")
+                                    $newImgStr
+                                #end
+                            #end
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     #end
 #end

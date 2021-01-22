@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="reportng-1.1.6">
+  <library name="reportng-1.1.7  (2)">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/reportng/target/reportng-1.1.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dist/reportng-1.1.7.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

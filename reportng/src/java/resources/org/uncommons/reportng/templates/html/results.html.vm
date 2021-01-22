@@ -8,12 +8,13 @@
   <meta name="description" content="TestNG unit test results." />
   <link href="reportng.css" rel="stylesheet" type="text/css" />
   <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="banner.css" rel="stylesheet" type="text/css" />
   #if ($meta.stylesheetPath)
   <link href="custom.css" rel="stylesheet" type="text/css" />
   #end
-  <script type="text/javascript" src="reportng.js"></script>
   <script type="text/javascript" src="jquery.min.js"></script>
   <script type="text/javascript" src="bootstrap.min.js"></script>
+  <script type="text/javascript" src="reportng.js"></script>
 </head>
 <body style="font-size:100%;">
 <h1>$result.testContext.name</h1>

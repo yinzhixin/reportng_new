@@ -301,6 +301,10 @@ public class HTMLReporter extends AbstractReporter
         copyClasspathResource(outputDirectory, "jquery.min.js", "jquery.min.js");
         copyClasspathResource(outputDirectory, "bootstrap.min.js", "bootstrap.min.js");
         copyClasspathResource(outputDirectory, "bootstrap.min.css", "bootstrap.min.css");
+        // add by yinzhixin at 2020-12-01
+        copyClasspathResource(outputDirectory, "banner.css", "banner.css");
+        copyClasspathResource(outputDirectory, "banner_left.png", "banner_left.png");
+        copyClasspathResource(outputDirectory, "banner_right.png", "banner_right.png");
         // If there is a custom stylesheet, copy that.
         File customStylesheet = META.getStylesheetPath();
 

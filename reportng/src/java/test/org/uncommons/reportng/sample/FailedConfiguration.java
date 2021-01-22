@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //=============================================================================
-package org.uncommons.reportng.sample;
+package java.test.org.uncommons.reportng.sample;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

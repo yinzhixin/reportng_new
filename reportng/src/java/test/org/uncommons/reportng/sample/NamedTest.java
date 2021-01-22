@@ -14,7 +14,7 @@
 // limitations under the License.
 //=============================================================================
 
-package org.uncommons.reportng.sample;
+package java.test.org.uncommons.reportng.sample;
 
 import org.testng.ITest;
 import org.testng.annotations.Test;

@@ -221,6 +221,14 @@ public class ReportNGUtils
         return hasSkipException(result) ? result.getThrowable().getMessage() : "";
     }
 
+    public boolean hasException(ITestResult result){
+        return result.getThrowable() != null;
+    }
+
+    public String getExceptionMessage(ITestResult result){
+        return result.getThrowable().getMessage();
+    }
+
 
     public boolean hasGroups(ISuite suite)
     {
@@ -433,8 +441,14 @@ public class ReportNGUtils
         return PERCENTAGE_FORMAT.format(numerator / (double) denominator);
     }
 
+    /**
+     * 获取带有img标签的整行日志内容
+     * @param s
+     * @return
+     */
     public String getImageString(String s) {
-        String regex = "(<span.*?</span>)?(<img(.*?)/>)";
+//        String regex = "(<span.*?</span>)?(<img(.*?)/>)";
+        String regex = ".*(<img(.*?)/>).*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()) {
@@ -445,8 +459,52 @@ public class ReportNGUtils
         }
     }
 
+    /**
+     * 获取一行日志中的img标签内容
+     * @param s
+     * @return
+     */
+    public String getPureImageString(String s) {
+        String regex = "<img(.*?)/>";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.find()) {
+            String group = matcher.group();
+            return group;
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * 删除带img标签的整行内容
+     * @param s
+     * @return
+     */
     public String removeImage(String s) {
-        return s.replaceAll("(<span.*?</span>)?(<img(.*?)/>)", "");
+//        String regex = "(<span.*?</span>)?(<img(.*?)/>)";
+        String regex = ".*(<img(.*?)/>).*";
+        return s.replaceAll(regex, "");
+    }
+
+    /**
+     * 删除整行日志中的img标签内容
+     * @param s
+     * @return
+     */
+    public String removeImageTag(String s) {
+        String regex = "<img(.*?)/>";
+        return s.replaceAll(regex, "");
+    }
+
+    /**
+     * 删除html标签中的style属性
+     * @param s
+     * @return
+     */
+    public String removeStyle(String s) {
+        String regex = "style=.+\"";
+        return s.replaceAll(regex, "");
     }
 
     public boolean isBlank(String str){
