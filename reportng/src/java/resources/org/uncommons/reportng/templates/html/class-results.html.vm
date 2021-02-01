@@ -61,6 +61,7 @@
     #if ($testResult.throwable && ( $testResult.status == 2 || $meta.shouldShowExpectedExceptions()))
     <a href="javascript:toggleElement('exception-$id', 'block')" title="$messages.getString("clickToExpandCollapse")"><b>$utils.escapeHTMLString( $testResult.throwable.toString() )</b></a><br />
     <div class="stackTrace" id="exception-$id">
+      $utils.escapeHTMLString( $testResult.throwable.toString() )<br />
       #foreach ($element in $testResult.throwable.stackTrace)
         $utils.escapeHTMLString( $element.toString() )<br />
       #end
